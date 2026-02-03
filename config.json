@@ -28,6 +28,10 @@
         -75.4954141
     ],
     "footerLogo": "img/logo.png",
+        "domicilio": {
+        "tarifaMinima": 3000,
+        "recargoNocturnoActivo": true
+    },
     "crearTienda": "https://wa.me/573022666530?text=Quiero%20crear%20mi%20tienda",
     "apiUrls": {
         "productos": "https://script.google.com/macros/s/AKfycbwmVsrJE3dh2Ewc-K37z5K6vxboDyI1UAZ21jAjxg9LJrQ4QoRIOgjwXxE_yx9jwX6QUQ/exec",
