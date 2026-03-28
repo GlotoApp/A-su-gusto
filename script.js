@@ -372,7 +372,7 @@ function createProductCard(product) {
   card.className = `product-card ${!product.activo ? "inactive" : ""}`;
 
   const imageContent = product.imagen
-    ? `<img src="${product.imagen}" alt="${product.nombre}" onerror="this.style.display='none'; this.parentElement.innerHTML='<img src=&quot;' + DEFAULT_IMG_URL + '&quot; alt=&quot;default&quot; style=&quot;width:100%;height:100%;object-fit:cover;&quot;>';">`
+    ? `<img src="${product.imagen}" alt="${product.nombre}" onerror="this.src='https://mrgeorge2022.github.io/Uploader/imagenes/default.jpg';">`
     : getCategoryEmoji(product.categoria);
 
   const descripcionValue =
@@ -433,14 +433,13 @@ function createProductCard(product) {
 }
 
 // ✅ Get emoji based on category
-const DEFAULT_IMG_URL =
-  "https://mrgeorge2022.github.io/Uploader/imagenes/default.jpg";
 /**
  * getCategoryEmoji
  * ----------------
- * Devuelve un emoji representativo según la categoría, o una imagen por defecto.
+ * Devuelve un emoji representativo según la categoría.
+ * Si no encuentra emoji, devuelve la imagen por defecto.
  * @param {string} categoria
- * @returns {string} emoji o html img tag
+ * @returns {string} emoji o HTML img con imagen por defecto
  */
 function getCategoryEmoji(categoria) {
   // Primero intenta encontrar el emoji en config.json
@@ -453,14 +452,12 @@ function getCategoryEmoji(categoria) {
 
   // Si no está en config.json, usar imagen por defecto
   const emojisFallback = {};
-  const fallback = emojisFallback[categoria.toLowerCase()];
-  if (fallback) return fallback;
+  const emoji = emojisFallback[categoria.toLowerCase()];
 
-  return (
-    '<img src="' +
-    DEFAULT_IMG_URL +
-    '" alt="Imagen por defecto" style="width:100%; height:100%; object-fit:cover;">'
-  );
+  if (emoji) return emoji;
+
+  // Fallback final: devolver imagen por defecto como HTML
+  return `<img src="https://mrgeorge2022.github.io/Uploader/imagenes/default.jpg" alt="default" style="width: 100%; height: 100%; object-fit: cover;">`;
 }
 
 // Format price in Colombian pesos
@@ -524,7 +521,7 @@ function openProductModal(product) {
   // Imagen
   const modalImage = document.getElementById("modal-image-content");
   if (product.imagen) {
-    modalImage.innerHTML = `<img src="${product.imagen}" alt="${product.nombre}" onerror="this.style.display='none'; this.parentElement.innerHTML='${getCategoryEmoji(product.categoria)}';">`;
+    modalImage.innerHTML = `<img src="${product.imagen}" alt="${product.nombre}" onerror="this.src='https://mrgeorge2022.github.io/Uploader/imagenes/default.jpg';">`;
   } else {
     modalImage.innerHTML = getCategoryEmoji(product.categoria);
   }
@@ -965,8 +962,8 @@ function renderCartItems() {
 
       const imageHTML = product?.imagen
         ? `<img src="${product.imagen}" alt="${item.name}" class="cart-item-image" 
-       onerror="this.style.display='none'; this.parentElement.innerHTML='${getCategoryEmoji(product.categoria)}';">`
-        : `<div class="cart-item-placeholder">${getCategoryEmoji(product?.categoria || "")}</div>`;
+       onerror="this.src='https://mrgeorge2022.github.io/Uploader/imagenes/default.jpg';">`
+        : `<div class="cart-item-placeholder"><img src="https://mrgeorge2022.github.io/Uploader/imagenes/default.jpg" alt="default" class="cart-item-image"></div>`;
 
       return `
         <div class="cart-item" data-index="${index}">
